@@ -5,7 +5,11 @@ echo "=> Linting Ansible Code"
 fail_ansible=0
 for f in `find . -name "*.yml"`; do
     echo "==> LINTING $f"
-    ansible-lint $f
+    if [[ ! -z "$1" ]]; then
+        ansible-lint $1 $f
+    else
+        ansible-lint $f
+    fi
     rc=$?
     if [[ $rc != 0 ]]; then
         echo "==> LINTING FAIL: $f"
